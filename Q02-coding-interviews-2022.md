@@ -57,5 +57,22 @@ To make the red box fit to the white color area, you can use the following CSS r
 ```
 ---
 
+To center the dot both vertically and horizontally within the red box, you can use the following CSS rules:
+```css,
+.black-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+```
+
+To prevent the content from overflowing and causing a vertical scrollbar, you can add the following CSS rule:
+```css,
+html, body {
+  overflow: hidden;
+}
+```
+---
 
 
