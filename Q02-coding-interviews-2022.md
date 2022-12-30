@@ -75,4 +75,26 @@ html, body {
 ```
 ---
 
+All
+```css,
+.black-dot {
+  background-color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.content {
+  width: fit-content;
+  height: fit-content;
+  background-color: red;
+}
+
+html, body {
+  overflow: hidden;
+}
+```
+---
+
 
