@@ -91,3 +91,127 @@ This will contain the HTML template for the main component of the app.
 ---
 ``src/app/app.component.ts``: This will contain the TypeScript code for the main component of the app.
 
+```ts,
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  inputNumber: number;
+  selectedCalculation: string;
+  result: string;
+
+  constructor() {
+    this.selectedCalculation = 'isPrime';
+  }
+
+  onInputChange() {
+    this.inputNumber = Math.round(this.inputNumber);
+    if (this.inputNumber < 1) {
+      this.inputNumber = 1;
+    }
+    this.calculateResult();
+  }
+
+  onCalculationChange() {
+    this.calculateResult();
+  }
+
+  calculateResult() {
+    if (this.selectedCalculation === 'isPrime') {
+      this.result = this.isPrime(this.inputNumber) ? 'true' : 'false';
+    } else if (this.selectedCalculation === 'isFibonacci') {
+      this
+```
+---
+
+Here is an example of how to create a web application that meets the specifications provided using the Angular framework:
+
+```js,html,css,ts,
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <div class="container">
+      <div class="column" style="width: 200px">
+        <input type="number" [(ngModel)]="inputNumber" (change)="onInputChange()" [value]="1" />
+      </div>
+      <div class="column" style="flex: 1; min-width: 100px">
+        <select [(ngModel)]="calculationType" (change)="onInputChange()">
+          <option value="isPrime">isPrime</option>
+          <option value="isFibonacci">isFibonacci</option>
+        </select>
+      </div>
+      <div class="column" style="width: 300px">
+        {{ result }}
+      </div>
+    </div>
+  `,
+  styles: [`
+    .container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      height: 100%;
+      overflow-x: auto;
+    }
+    .column {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  `]
+})
+export class AppComponent implements OnInit {
+  inputNumber = 1;
+  calculationType = 'isPrime';
+  result: boolean;
+
+  ngOnInit() {
+    this.onInputChange();
+  }
+
+  onInputChange() {
+    const input = Math.round(Math.max(1, this.inputNumber));
+
+    if (this.calculationType === 'isPrime') {
+      this.result = this.isPrime(input);
+    } else {
+      this.result = this.isFibonacci(input);
+    }
+  }
+
+  isPrime(n: number): boolean {
+    if (n < 2) {
+      return false;
+    }
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+      if (n % i === 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  isFibonacci(n: number): boolean {
+    if (n === 0 || n === 1) {
+      return true;
+    }
+    let previous = 0;
+    let current = 1;
+    while (current < n) {
+      [previous, current] = [current, previous + current];
+    }
+    return current === n;
+  }
+}
+```
+This code defines an Angular component with a template that includes three columns, an input field in the first column, a dropdown in the second column, and a display element in the third column. The component also includes logic to perform the ``isPrime`` and ``isFibonacci`` calculations and display the results in the third column.
+
+The input field and dropdown are bound to component properties using the ``[(ngModel)]`` syntax, and the ``(change)`` event is used to trigger the calculation when the input or dropdown value changes.
+
+The component also includes a couple of helper functions, ``isPrime`` and ``isFibonacci``,
