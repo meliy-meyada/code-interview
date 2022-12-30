@@ -1,6 +1,5 @@
 # Question 1
-- Assuming http://codequiz.azurewebsites.net/data returns an object {data: 10}.
-Below function doesn't work correctly.
+Assuming http://codequiz.azurewebsites.net/data returns an object {data: 10}.Below function doesn't work correctly.
 ```js,
 function thisIsSyncFunction() {
  let result = 0;
@@ -34,9 +33,10 @@ const number1 = await thisIsSyneFunction();
 const calculation = number1 * 10;
 console.log(calculation);
 ```
-- Note that the ``thisIsSyncFunction`` function must be marked as ``async`` and the call to ``thisIsSyncFunction`` must be preceded by the ``await`` keyword in order for this approach to work.
 
-- Alternatively, you could use a callback function to handle the result of the ``fetch`` call:
+> Note that the ``thisIsSyncFunction`` function must be marked as ``async`` and the call to ``thisIsSyncFunction`` must be preceded by the ``await`` keyword in order for this approach to work.
+
+> Alternatively, you could use a callback function to handle the result of the ``fetch`` call:
 
 ```js,
 function thisIsSyncFunction(callback) {
