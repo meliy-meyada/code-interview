@@ -38,9 +38,24 @@
 - Content MUST NOT overflow -- No vertical scrollbar
 
 ## Answer 
+---
 To change the dot from green to black, you can add the following CSS rule:
 ```css,
 .black-dot {
   background-color: black;
 }
 ```
+---
+
+To make the red box fit to the white color area, you can use the following CSS rule:
+```css,
+.content {
+  width: fit-content;
+  height: fit-content;
+  background-color: red;
+}
+```
+---
+
+
+
