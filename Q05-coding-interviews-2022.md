@@ -20,3 +20,74 @@ Please create a web application following below specs.
 
 ## Answer 
 ---
+1. First, make sure you have the Angular CLI installed. If not, you can install it by running 
+```sh, 
+npm install -g @angular/cli 
+```
+
+2. Create a new Angular project by running 
+```sh, 
+ng new my-app 
+```
+
+3. Navigate to the project directory and start the development server by running 
+```sh, 
+cd my-app and ng serve
+```
+
+4. Open a text editor and create the following files:
+``src/app/app.component.html``: 
+---
+This will contain the HTML template for the main component of the app.
+
+```html,
+<div class="container">
+  <div class="col col-1">
+    <input type="number" [(ngModel)]="inputNumber" (input)="onInputChange()" [value]="inputNumber">
+  </div>
+  <div class="col col-2">
+    <select [(ngModel)]="selectedCalculation" (change)="onCalculationChange()">
+      <option value="isPrime">is Prime</option>
+      <option value="isFibonacci">is Fibonacci</option>
+    </select>
+  </div>
+  <div class="col col-3">
+    {{result}}
+  </div>
+</div>
+```
+---
+``src/app/app.component.css``: This will contain the CSS styles for the main component of the app.
+```css,
+.container {
+  display: flex;
+}
+
+.col {
+  width: 200px;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+.col-1 {
+  width: 200px;
+}
+
+.col-2 {
+  flex: 1;
+  min-width: 100px;
+}
+
+.col-3 {
+  width: 300px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    overflow-x: scroll;
+  }
+}
+```
+---
+``src/app/app.component.ts``: This will contain the TypeScript code for the main component of the app.
+
