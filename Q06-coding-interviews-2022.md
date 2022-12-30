@@ -9,100 +9,78 @@ Filtering
 
 ## Answer 
 ---
-1. First, create a new Angular project using the Angular CLI.
 
-2. Next, create a component for the input box and the table. You can do this by running the following command:
-```sh,
-ng generate component categories
-```
----
+1. Create a new Angular project using the Angular CLI.
 
-3. In the ``categories.component.html`` file, add the input box and the table. The input box should have an ``ngModel`` directive for two-way data binding and an ``(ngModelChange)`` event binding to trigger the filtering function when the input value changes. The table should have a ``*ngFor`` directive to iterate over the data and display it in rows.
+2. Create a component for the result table. This component will be responsible for displaying the data in the table.
 
-```html,
-<input type="text" [(ngModel)]="filter" (ngModelChange)="filterCategories()">
+3. In the component, create an input field for the user to enter a filter query.
 
-<table>
-  <tr *ngFor="let category of filteredCategories">
-    <td>{{ category }}</td>
-  </tr>
-</table>
-```
----
-4. In the ``categories.component.ts`` file, add a property for the data and a property for the filtered data. Also, add a function for filtering the data based on the input value.
+4. Create a service to make API calls to the https://api.publicapis.org/categories endpoint.
+
+5. In the component, use the service to fetch the data from the API and store it in a variable.
+
+6. Use the ``ngFor`` directive to loop through the data and display it in a table.
+
+7. Implement the filtering functionality by using the Angular Pipe feature. When the user types in the input field, the pipe will filter the data and display only the results that contain the text entered by the user.
+
 ```ts,
 import { Component, OnInit } from '@angular/core';
+import { CategoriesService } from './categories.service';
+import { Category } from './category';
 
 @Component({
   selector: 'app-categories',
-  templateUrl: './categories.component.html',
+  template: `
+    <input type="text" [(ngModel)]="filterText" placeholder="Filter by name">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let category of categories | filter:filterText">
+        <td>{{category.name}}</td>
+        <td>{{category.description}}</td>
+      </tr>
+    </table>
+  `,
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  data = {
-    "count": 51,
-    "categories": [
-      "Animals",
-      "Anime",
-      "Anti-Malware",
-      "Art & Design",
-      "Authentication & Authorization",
-      "Blockchain",
-      "Books",
-      "Business",
-      "Calendar",
-      "Cloud Storage & File Sharing",
-      "Continuous Integration",
-      "Cryptocurrency",
-      "Currency Exchange",
-      "Data Validation",
-      "Development",
-      "Dictionaries",
-      "Documents & Productivity",
-      "Email",
-      "Entertainment",
-      "Environment",
-      "Events",
-      "Finance",
-      "Food & Drink",
-      "Games & Comics",
-      "Geocoding",
-      "Government",
-      "Health",
-      "Jobs",
-      "Machine Learning",
-      "Music",
-      "News",
-      "Open Data",
-      "Open Source Projects",
-      "Patent",
-      "Personality",
-      "Phone",
-      "Photography",
-      "Programming",
-      "Science & Math",
-      "Security",
-      "Shopping",
-      "Social",
-      "Sports & Fitness",
-      "Test Data",
-      "Text Analysis",
-      "Tracking",
-      "Transportation",
-      "URL Shorteners",
-      "Vehicle",
-      "Video",
-      "Weather"
-    ]
+  categories: Category[];
+  filterText: string;
+
+  constructor(private categoriesService: CategoriesService) { }
+
+  ngOnInit() {
+    this.categoriesService.getCategories().subscribe(categories => {
+      this.categories = categories;
+    });
   }
-  filteredCategories: string[];
+}
+```
+And here is an example of the ``filter`` pipe
 
-  constructor() { }
+```ts,
+import { Pipe, PipeTransform } from '@angular/core';
 
-  ngOnInit(): void {
-    this.filteredCategories = this.data.categories;
+@Pipe({
+  name: 'filter'
+})
+export class FilterPipe implements PipeTransform {
+
+  transform(items: any[], searchText: string): any[] {
+    if (!items) {
+      return [];
+    }
+    if (!searchText) {
+      return items;
+    }
+    searchText = searchText.toLowerCase();
+    return items.filter(it => {
+      return it.name.toLowerCase().includes(searchText);
+    });
   }
 
-  filterCategories() {
-    this.filteredCategories = this.data.categories.
+}
 ```
