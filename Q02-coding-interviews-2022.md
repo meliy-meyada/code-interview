@@ -35,6 +35,12 @@
 - Write CSS to make red box's size fit to white color area
 
 - The dot should be at center of the red box area (vertical and horizontal)
-
 - Content MUST NOT overflow -- No vertical scrollbar
 
+## Answer 
+To change the dot from green to black, you can add the following CSS rule:
+```css,
+.black-dot {
+  background-color: black;
+}
+```
