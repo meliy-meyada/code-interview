@@ -1,9 +1,9 @@
 # Question 1
-Assuming http://codequiz.azurewebsites.net/data returns an object {data: 10}.Below function doesn't work correctly.
+Assuming http://codequiz.example.net/data returns an object {data: 10}.Below function doesn't work correctly.
 ```js,
 function thisIsSyncFunction() {
  let result = 0;
- fetch('https://codequiz.azurewebsites.net/data').then(res => res.json()).then((response) => {
+ fetch('https://codequiz.example.net/data').then(res => res.json()).then((response) => {
   result = response.data;
 });
  return result;
@@ -23,7 +23,7 @@ Here's an example of how you could rewrite the function using ``async`` and ``aw
 ```js,
 async function thisIsSyncFunction() {
   let result = 0;
-  const res = await fetch('https://codequiz.azurewebsites.net/data');
+  const res = await fetch('https://codequiz.example.net/data');
   const response = await res.json();
   result = response.data;
   return result;
@@ -40,7 +40,7 @@ console.log(calculation);
 
 ```js,
 function thisIsSyncFunction(callback) {
-  fetch('https://codequiz.azurewebsites.net/data').then(res => res.json()).then((response) => {
+  fetch('https://codequiz.example.net/data').then(res => res.json()).then((response) => {
     callback(response.data);
   });
 }
@@ -50,3 +50,28 @@ thisIsSyncFunction((number1) => {
   console.log(calculation);
 });
 ```
+This way, the callback function will be executed once the value of ``number1`` has been determined.
+
+## Question 1.1
+Please correct the code, so it really prints out the expected result (100). You can fix it anyway you like but it still has to call fetch as the source of data.
+### Answer 
+Here's one way you could rewrite the function to correctly print out the expected result of 100:
+```js,
+async function thisIsSyncFunction() {
+  let result = 0;
+  const res = await fetch('https://codequiz.example.net/data');
+  const response = await res.json();
+  result = response.data;
+  return result;
+}
+
+async function main() {
+  const number1 = await thisIsSyncFunction();
+  const calculation = number1 * 10;
+  console.log(calculation);
+}
+
+main();
+```
+This approach uses the ``async`` and ``await`` keywords to make the ``thisIsSyncFunction`` function asynchronous, and ``then`` calls the function inside an ``async`` function called ``main``. The ``main`` function is ``then`` called, which allows the ``await`` keyword to be used to wait for the ``result`` of the ``thisIsSyncFunction`` call before performing the ``calculation`` and logging the ``result``.
+
